@@ -1,0 +1,10 @@
+@import '../../section/mixins';
+
+.pokemon__cards {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px red solid;
+
+  // @include flex(column);
+  @include grid();
+}

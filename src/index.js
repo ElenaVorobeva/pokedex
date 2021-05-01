@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import './index.css';
+import './index.scss';
 import App from './App';
 
 import { BrowserRouter } from 'react-router-dom';
@@ -14,7 +14,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <App perPage={10} />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

@@ -1,0 +1,14 @@
+@mixin flex($direction) {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: $direction;
+}
+
+@mixin grid() {
+  margin: 30px auto 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  row-gap: 10px;
+}

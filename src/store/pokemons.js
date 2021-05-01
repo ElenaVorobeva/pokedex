@@ -6,6 +6,7 @@ const slice = createSlice({
   name: 'pokemons',
   initialState: {
     list: [],
+    caught: [],
     loading: false,
     lastFetch: null,
   },
@@ -28,13 +29,14 @@ const slice = createSlice({
       const index = pokemons.list.findIndex(
         pokemon => pokemon.id === action.payload.id
       );
+
       pokemons.list[index].isCaught = true;
+      pokemons.caught.push(pokemons.list[index]);
     },
   },
 });
 
-export const {
-  pokemonAdded,
+const {
   pokemonsRecieved,
   pokemonsRequested,
   pokemonsRequestFailed,
@@ -60,15 +62,12 @@ export const loadPokemons = () => (dispatch, getState) => {
   );
 };
 
-export const catchPokemon = id =>
-  apiCallBegan({
-    url: url + '/' + id,
-    method: 'patch',
-    data: { isCaught: true },
-    onSuccess: pokemonCaught.type,
-  });
-
-export const getCaughtPokemons = createSelector(
-  state => state.entities.pokemons,
-  pokemons => pokemons.list.filter(pokemon => pokemon.isCaught)
-);
+export const catchPokemon = id => (dispatch, getState) => {
+  dispatch(
+    apiCallBegan({
+      url: url + '/' + id,
+      method: 'patch',
+      onSuccess: pokemonCaught.type,
+    })
+  );
+};
