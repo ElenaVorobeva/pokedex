@@ -12,7 +12,7 @@ function App() {
       <Switch>
         <Route path="/pokemons" component={Home}></Route>
         <Route path="/caught-pokemons" component={CaughtPokemons}></Route>
-        <Redirect from="/" exact to="/home"></Redirect>
+        <Redirect from="/" exact to="/pokemons"></Redirect>
       </Switch>
     </React.Fragment>
   );

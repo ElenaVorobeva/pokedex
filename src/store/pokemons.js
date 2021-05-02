@@ -1,4 +1,4 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from './api';
 import moment from 'moment';
 
@@ -11,7 +11,7 @@ const slice = createSlice({
     lastFetch: null,
   },
   reducers: {
-    pokemonsRequested: (pokemons, action) => {
+    pokemonsRequested: pokemons => {
       pokemons.loading = true;
     },
 
@@ -21,7 +21,7 @@ const slice = createSlice({
       pokemons.lastFetch = Date.now();
     },
 
-    pokemonsRequestFailed: (pokemons, action) => {
+    pokemonsRequestFailed: pokemons => {
       pokemons.loading = false;
     },
 

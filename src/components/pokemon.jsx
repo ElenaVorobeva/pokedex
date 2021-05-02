@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadPokemons, catchPokemon } from '../store/pokemons';
-// import Pagination from './common/pagination'
 import { paginate } from '../utils/paginate';
-import Pagination from "react-js-pagination";
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -13,7 +12,7 @@ class Pokemon extends React.Component {
     super();
     this.state = {
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 20,
     };
     this.props = props;
   }
@@ -23,26 +22,19 @@ class Pokemon extends React.Component {
   }
 
   handlePageChange = page => {
-    this.setState({ currentPage: page});
+    this.setState({ currentPage: page.selected + 1});
   }
 
-  handlePrevPage = () => {
-    this.setState({currentPage: this.state.currentPage - 1})
-  }
-
-  handleNextPage = () => {
-    this.setState({currentPage: this.state.currentPage + 1})
-  }
-
-  handleCatchButton = (id, pokemon) => {
+  handleCatchButton = (id) => {
     this.props.dispatch(catchPokemon(id));
   }
 
   render() {
     const { pageSize, currentPage } = this.state;
     const pokemons = paginate(this.props.pokemons, currentPage, pageSize);
-    const pokemonsCount = Math.ceil(this.props.pokemons.length / this.state.pageSize);
     if (this.props.pokemons.length === 0) return <p>There are no pokemons in database.</p>
+
+    // const pagesCount = Math.ceil(this.props.pokemons.length / this.state.pageSize);
 
     return (
       <React.Fragment>
@@ -54,23 +46,31 @@ class Pokemon extends React.Component {
       </div>
       ))}
       </div>
-      <div>
-      <Pagination
 
-      activePage={this.state.currentPage}
-      itemsCountPerPage={this.state.pageSize}
-      totalItemsCount={pokemonsCount}
-      pageRangeDisplayed={5}
-      onChange={this.handlePageChange.bind(this)}
 
-        // itemsCount={this.props.pokemons.length}
-        // pageSize={pageSize}
-        // currentPage={currentPage}
-        // onPageChange={this.handlePageChange}
-        // onPrev={this.handlePrevPage}
-        // onNext={this.handleNextPage}
-      />
-      </div>
+
+
+      <nav>
+      <ReactPaginate
+        pageCount={Math.ceil(this.props.pokemons.length / this.state.pageSize)}
+        pageRangeDisplayed={11}
+        marginPagesDisplayed={3}
+        previousLabel={'Prev'}
+        nextLabel={'Next'}
+        onPageChange={this.handlePageChange}
+
+        breakClassName='page-item'
+        breakLinkClassName='page-link'
+        containerClassName='pagination'
+        pageClassName='page-item'
+        previousClassName='page-item'
+        nextClassName='page-item'
+        pageLinkClassName='page-link'
+        previousLinkClassName='page-link'
+        nextLinkClassName='page-link'
+        activeClassName='active'
+        />
+      </nav>
       </React.Fragment>
     )
   }

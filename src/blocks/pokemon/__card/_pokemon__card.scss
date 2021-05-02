@@ -1,6 +1,9 @@
 @import '../../section/mixins';
 
 .pokemon__card {
-  width: 250px;
+  width: 320px;
+  height: 200px;
+  border: 1px red solid;
+
   @include flex(column);
 }

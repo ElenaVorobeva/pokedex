@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadPokemons } from '../store/pokemons';
-import Pagination from './common/pagination'
 import { paginate } from '../utils/paginate';
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -12,7 +12,7 @@ class CaughtPokemons extends React.Component {
     super();
     this.state = {
       currentPage: 1,
-      pageSize: 2
+      pageSize: 5
     };
     this.props = props;
   }
@@ -22,17 +22,8 @@ class CaughtPokemons extends React.Component {
   }
 
   handlePageChange = page => {
-    this.setState({ currentPage: page});
+    this.setState({ currentPage: page.selected});
   }
-
-  handlePrevPage = () => {
-    this.setState({currentPage: this.state.currentPage - 1})
-  }
-
-  handleNextPage = () => {
-    this.setState({currentPage: this.state.currentPage + 1})
-  }
-
 
   render() {    
     const { pageSize, currentPage } = this.state;
@@ -40,6 +31,10 @@ class CaughtPokemons extends React.Component {
     const pokemons = paginate(caughtPokemons, currentPage, pageSize);
 
     if (caughtPokemons.length === 0) return <p>You have no caught pokemons.</p>
+
+    const pagesCount = Math.ceil(this.props.caught.length / this.state.pageSize);
+
+
 
     return (
       <React.Fragment>
@@ -51,15 +46,28 @@ class CaughtPokemons extends React.Component {
       </div>
       ))}
       </div>
-      <Pagination
-        itemsCount={caughtPokemons.length}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={this.handlePageChange}
-        onPrev={this.handlePrevPage}
-        onNext={this.handleNextPage}
 
-      />
+      <nav>
+      <ReactPaginate
+        pageCount={pagesCount}
+        pageRangeDisplayed={11}
+        marginPagesDisplayed={3}
+        previousLabel={'Prev'}
+        nextLabel={'Next'}
+        onPageChange={this.handlePageChange}
+
+        breakClassName='page-item'
+        breakLinkClassName='page-link'
+        containerClassName='pagination'
+        pageClassName='page-item'
+        previousClassName='page-item'
+        nextClassName='page-item'
+        pageLinkClassName='page-link'
+        previousLinkClassName='page-link'
+        nextLinkClassName='page-link'
+        activeClassName='active'
+        />
+      </nav>
       </React.Fragment>
      );
   }
