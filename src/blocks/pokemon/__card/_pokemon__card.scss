@@ -3,12 +3,7 @@
 .pokemon__card {
   width: 250px;
   height: 350px;
-  border: 1px black dotted;
-  border-radius: 15px;
-  background: url('http://localhost:9002/images/pokeball1.svg');
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: 35%;
-  background-size: 200%;
+  perspective: 600px;
+
   @include flex(column);
 }

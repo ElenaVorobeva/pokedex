@@ -46,10 +46,13 @@ class CaughtPokemons extends React.Component {
       <div className="pokemon__cards">
         {pokemons.map((pokemon, index) => (
         <div key={index} className="pokemon__card">
-          <div className="pokemon__card-top">
-          <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+          <div className='pokemon__front pokemon__front_bg'>
+
+        <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+        <div className="pokemon__top">
           <p className="pokemon__name">{pokemon.name}</p>
-          </div>
+        </div>
+        </div>
       </div>
       ))}
       </div>

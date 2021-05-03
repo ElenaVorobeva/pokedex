@@ -1,11 +1,11 @@
 import React from 'react';
-import Pokemon from './pokemon';
+import Pokemons from './pokemons';
 
 const Home = () => {
   return (
     <React.Fragment>
       <h1>Pokemons</h1>
-      <Pokemon />
+      <Pokemons />
     </React.Fragment> 
 
    );
