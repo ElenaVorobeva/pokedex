@@ -1,9 +1,14 @@
 @import '../../section/mixins';
 
 .pokemon__card {
-  width: 320px;
-  height: 200px;
-  border: 1px red solid;
-
+  width: 250px;
+  height: 350px;
+  border: 1px black dotted;
+  border-radius: 15px;
+  background: url('http://localhost:9002/images/pokeball1.svg');
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: 35%;
+  background-size: 200%;
   @include flex(column);
 }

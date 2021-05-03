@@ -4,5 +4,9 @@
   width: 100%;
   margin: 0 auto;
 
-  @include grid();
+  font-family: 'pokemon';
+  color: #ffcb05;
+  font-size: 25px;
+  letter-spacing: 3px;
+  @include cardsFlex();
 }

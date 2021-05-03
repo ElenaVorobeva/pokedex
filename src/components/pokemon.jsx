@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadPokemons, catchPokemon } from '../store/pokemons';
+import { loadPokemons, catchPokemon, getPokemonImage } from '../store/pokemons';
 import { paginate } from '../utils/paginate';
 import ReactPaginate from 'react-paginate';
 
@@ -29,20 +29,29 @@ class Pokemon extends React.Component {
     this.props.dispatch(catchPokemon(id));
   }
 
+  handlePokemonImage = id => {
+    return `http://localhost:9002/images/${id}.png`;
+
+  }
+
   render() {
     const { pageSize, currentPage } = this.state;
     const pokemons = paginate(this.props.pokemons, currentPage, pageSize);
     if (this.props.pokemons.length === 0) return <p>There are no pokemons in database.</p>
 
-    // const pagesCount = Math.ceil(this.props.pokemons.length / this.state.pageSize);
+    const pokeball = 'http://localhost:9002/images/pokeball.svg'
 
     return (
       <React.Fragment>
+        <section className='pokemon'>
       <div className="pokemon__cards">
         {pokemons.map((pokemon, index) => (
-        <div key={index} className="pokemon__card">
-        <p className="pokemon__name btn btn-primary m-2">{pokemon.name}</p>
-        <button className={pokemon.isCaught ? 'btn btn-danger disabled' : 'btn btn-danger'} disabled={pokemon.isCaught} onClick={() => this.handleCatchButton(pokemon.id, pokemon)}>Catch</button>
+          <div key={index} className="pokemon__card">
+          <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+          <div className="pokemon__card-top">
+          <p className="pokemon__name">{pokemon.name}</p>
+          <button className={pokemon.isCaught ? 'btn btn-danger pokemon__btn disabled' : 'btn btn-danger pokemon__btn rounded'} disabled={pokemon.isCaught} onClick={() => this.handleCatchButton(pokemon.id, pokemon)}>Catch</button>
+          </div>
       </div>
       ))}
       </div>
@@ -53,8 +62,8 @@ class Pokemon extends React.Component {
       <nav>
       <ReactPaginate
         pageCount={Math.ceil(this.props.pokemons.length / this.state.pageSize)}
-        pageRangeDisplayed={11}
-        marginPagesDisplayed={3}
+        pageRangeDisplayed={5}
+        marginPagesDisplayed={2}
         previousLabel={'Prev'}
         nextLabel={'Next'}
         onPageChange={this.handlePageChange}
@@ -71,7 +80,9 @@ class Pokemon extends React.Component {
         activeClassName='active'
         />
       </nav>
+      </section>
       </React.Fragment>
+      
     )
   }
 

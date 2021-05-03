@@ -1,14 +1,26 @@
+$colors: (
+  red: #e81e49,
+  orange: #f45e30,
+  yellow: #fed02f,
+  green: #58bd1b,
+  blue-green: #11b38f,
+  blue: #0bbfce,
+  dark-blue: #2b6bd1,
+  purple: #833ec3,
+  light-purple: #d23ad0,
+  pink: #fa3c88,
+);
+
 @mixin flex($direction) {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: space-around;
   flex-direction: $direction;
 }
 
-@mixin grid() {
-  margin: 30px auto 0;
-  width: 100%;
+@mixin cardsFlex() {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  row-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: space-between;
+  grid-gap: 20px;
 }

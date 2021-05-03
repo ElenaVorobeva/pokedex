@@ -16,6 +16,10 @@ const slice = createSlice({
     },
 
     pokemonsRecieved: (pokemons, action) => {
+      const index = pokemons.list.findIndex(
+        pokemon => pokemon.id === action.payload.id
+      );
+
       pokemons.list = action.payload;
       pokemons.loading = false;
       pokemons.lastFetch = Date.now();
@@ -44,7 +48,8 @@ const {
 } = slice.actions;
 export default slice.reducer;
 
-const url = '/pokemons';
+const url = '/api/pokemons';
+const imageUrl = '/images';
 
 export const loadPokemons = () => (dispatch, getState) => {
   const { lastFetch } = getState().entities.pokemons;

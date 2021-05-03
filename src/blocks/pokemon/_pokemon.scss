@@ -1,2 +1,16 @@
 @import './__cards/pokemon__cards.scss';
 @import './__card/pokemon__card.scss';
+@import './__image/pokemon__image';
+@import './__card-top/pokemon__card-top';
+@import './__pokeball/pokemon__pokeball';
+@import './__name/pokemon__name';
+@import './__btn/pokemon__btn';
+
+@import '../section/mixins';
+
+.pokemon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}

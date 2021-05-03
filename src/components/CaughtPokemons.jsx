@@ -22,7 +22,11 @@ class CaughtPokemons extends React.Component {
   }
 
   handlePageChange = page => {
-    this.setState({ currentPage: page.selected});
+    this.setState({ currentPage: page.selected + 1});
+  }
+
+  handlePokemonImage = id => {
+    return `http://localhost:9002/images/${id}.png`;
   }
 
   render() {    
@@ -42,7 +46,10 @@ class CaughtPokemons extends React.Component {
       <div className="pokemon__cards">
         {pokemons.map((pokemon, index) => (
         <div key={index} className="pokemon__card">
-        <p className="pokemon__name btn btn-primary m-2">{pokemon.name}</p>
+          <div className="pokemon__card-top">
+          <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+          <p className="pokemon__name">{pokemon.name}</p>
+          </div>
       </div>
       ))}
       </div>
@@ -50,8 +57,8 @@ class CaughtPokemons extends React.Component {
       <nav>
       <ReactPaginate
         pageCount={pagesCount}
-        pageRangeDisplayed={11}
-        marginPagesDisplayed={3}
+        pageRangeDisplayed={5}
+        marginPagesDisplayed={2}
         previousLabel={'Prev'}
         nextLabel={'Next'}
         onPageChange={this.handlePageChange}

@@ -1,0 +1,5 @@
+@import '../../section/mixins';
+
+.pokemon__card-top {
+  @include flex(column);
+}
