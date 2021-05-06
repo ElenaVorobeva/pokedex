@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadPokemons } from '../store/pokemons';
+import { loadCaughtPokemons } from '../store/pokemons';
 import { paginate } from '../utils/paginate';
 import ReactPaginate from 'react-paginate';
 
@@ -12,13 +12,13 @@ class CaughtPokemons extends React.Component {
     super();
     this.state = {
       currentPage: 1,
-      pageSize: 5
+      pageSize: 20
     };
     this.props = props;
   }
 
   componentDidMount() {
-    this.props.dispatch(loadPokemons());
+    this.props.dispatch(loadCaughtPokemons());
   }
 
   handlePageChange = page => {
@@ -29,35 +29,43 @@ class CaughtPokemons extends React.Component {
     return `http://localhost:9002/images/${id}.png`;
   }
 
-  render() {    
+  aboutPokemon = id => `http://localhost:3000/pokemons/${id}`;
+
+
+  render() {
+    console.log(this.props.caught)
+
     const { pageSize, currentPage } = this.state;
     const caughtPokemons = this.props.caught;
+
     const pokemons = paginate(caughtPokemons, currentPage, pageSize);
 
     if (caughtPokemons.length === 0) return <p>You have no caught pokemons.</p>
 
-    const pagesCount = Math.ceil(this.props.caught.length / this.state.pageSize);
+    const pagesCount = Math.ceil(caughtPokemons.length / this.state.pageSize);
 
 
 
     return (
       <React.Fragment>
+      <section className="pokemon mt-3">
       <h1>Caught Pokemons</h1>
-      <div className="pokemon__cards">
+      <div className="pokemon__cards m-4">
         {pokemons.map((pokemon, index) => (
         <div key={index} className="pokemon__card">
-          <div className='pokemon__front pokemon__front_bg'>
-
-        <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
-        <div className="pokemon__top">
-          <p className="pokemon__name">{pokemon.name}</p>
+          <div className='pokemon__front'>
+            <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+              <div className="pokemon__top">
+                <p className="pokemon__name">{pokemon.name}</p>
+                <button className='btn btn-danger pokemon__btn pokemon__btn_disabled' disabled>Caught</button>
+              </div>
+              <a className="pokemon__link" target="_blank" href={this.aboutPokemon(pokemon.id)}></a>
+          </div>
         </div>
-        </div>
-      </div>
       ))}
       </div>
 
-      <nav>
+      <nav className="mx-auto">
       <ReactPaginate
         pageCount={pagesCount}
         pageRangeDisplayed={5}
@@ -78,6 +86,7 @@ class CaughtPokemons extends React.Component {
         activeClassName='active'
         />
       </nav>
+      </section>
       </React.Fragment>
      );
   }
@@ -86,7 +95,6 @@ class CaughtPokemons extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    pokemons: state.entities.pokemons.list,
     caught: state.entities.pokemons.caught
   }
 }

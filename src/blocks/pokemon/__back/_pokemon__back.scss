@@ -13,3 +13,7 @@
   background-color: rgba(0, 0, 0, 0.3);
   content: '';
 }
+
+.pokemon__back:hover::after {
+  background-color: rgba(0, 0, 0, 0);
+}

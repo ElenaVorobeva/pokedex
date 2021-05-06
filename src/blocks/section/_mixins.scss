@@ -20,7 +20,7 @@ $colors: (
 
 @mixin cardsFlex() {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
+  grid-template-columns: repeat(auto-fill, 205px);
   justify-content: space-between;
   grid-gap: 20px;
 }

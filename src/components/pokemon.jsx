@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { loadPokemons } from '../store/pokemons';
 
 
 const Pokemon = (props) => {
-  const { id } = useParams();
-  const history = useHistory();
+  let { id } = useParams();
+  id = Number(id);
 
-  props.dispatch(loadPokemons());
+  useEffect(() => {
+    props.dispatch(loadPokemons());
+  }, [])
 
-  const handleUrl = (e) => {
-    id && history.push(`/${id}`);
-  };
+
+  const pokemons = props.pokemons;
+  console.log(pokemons); 
+
+  let pokemon = pokemons.filter(item => item.id === id);
+  pokemon = pokemon[0];
+  console.log(pokemon);
+
 
   const handleName = () => {
-    return props.pokemons[id].name;
+    const name = pokemon.name.split('');
+    name.splice(0, 1, name[0].toUpperCase()).join();
+
+    return name;
   }
 
   const handlePokemonImage = () => {
@@ -23,17 +33,21 @@ const Pokemon = (props) => {
 
   }
 
-
-
-  {if (props.pokemons.length === 0) return <p>Loading...</p>}
-  {if (id > props.pokemons.length) return <p>No such pokemon in the database.</p>}
+  {if (props.loading || props.pokemons.length === 0) return <p>Loading...</p>}
+  {if (!props.pokemons.find(pokemon => pokemon.id === id)) return <p>No such pokemon in the database.</p>}
 
   return (
     <React.Fragment>
-      <section className="about">
-        <h1 className="about__title">{handleName()}</h1>
-        <img src={handlePokemonImage()} alt="Pokemon" className="about__image"/>
-        <p className="about__status"></p>
+      <section className="about mt-5">
+      <div className="about__image-bg"></div>
+        <div className="about__info mt-5">
+          <h1 className="about__title mb-4">{handleName()}</h1>
+          <p className="about__status">Status: {pokemon.isCaught ? 'Caught' : 'Free'}</p>
+          <p className="about__time">{pokemon.isCaught ? 'Caught: ' + pokemon.catchTime : ''}</p>
+        </div>
+        <div className="about__image">
+          <img src={handlePokemonImage()} alt="Pokemon" className="about__photo"/>
+        </div>
       </section>
     </React.Fragment>
   );
@@ -41,7 +55,8 @@ const Pokemon = (props) => {
  
 const mapStateToProps = function(state) {
   return {
-    pokemons: state.entities.pokemons.list
+    pokemons: state.entities.pokemons.list,
+    loading: state.entities.pokemons.loading
   }
 }
  

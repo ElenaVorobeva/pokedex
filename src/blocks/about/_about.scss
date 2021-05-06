@@ -1,0 +1,19 @@
+@import './__image/about__image';
+@import './__image-bg/about__image-bg';
+@import './__photo/about__photo';
+@import './__title/about__title';
+
+.about {
+  margin: 0 auto;
+  padding: 15px 20px;
+  width: 70%;
+  border: 10px #434a54 solid;
+  border-radius: 20px;
+  background-color: #e6e9ed;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  position: relative;
+}

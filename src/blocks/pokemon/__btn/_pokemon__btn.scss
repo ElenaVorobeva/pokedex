@@ -1,5 +1,15 @@
+@import './_hover/pokemon__btn_hover';
+
 .pokemon__btn {
   color: #e6e9ed !important;
-  padding: 7px 90px !important;
+  padding: 4px 70px !important;
   background-color: #ed5564 !important;
+  // position: relative;
+  z-index: 2;
+  font-size: 15px !important;
+
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translate(-50%, -50%);
 }

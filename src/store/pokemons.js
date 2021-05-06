@@ -4,12 +4,14 @@ import moment from 'moment';
 
 const slice = createSlice({
   name: 'pokemons',
+
   initialState: {
     list: [],
     caught: [],
     loading: false,
     lastFetch: null,
   },
+
   reducers: {
     pokemonsRequested: pokemons => {
       pokemons.loading = true;
@@ -29,13 +31,33 @@ const slice = createSlice({
       pokemons.loading = false;
     },
 
+    caughtPokemonsRequested: pokemons => {
+      pokemons.loading = true;
+    },
+
+    caughtPokemonsRecieved: (pokemons, action) => {
+      const index = pokemons.caught.findIndex(
+        pokemon => pokemon.id === action.payload.id
+      );
+
+      pokemons.caught = action.payload;
+      pokemons.loading = false;
+    },
+
+    caughtPokemonsRequestFailed: pokemons => {
+      pokemons.loading = false;
+    },
+
     pokemonCaught: (pokemons, action) => {
       const index = pokemons.list.findIndex(
         pokemon => pokemon.id === action.payload.id
       );
 
-      pokemons.list[index].isCaught = true;
-      pokemons.caught.push(pokemons.list[index]);
+      pokemons.list[index] = action.payload;
+    },
+
+    caughtPokemonHandled: (pokemons, action) => {
+      pokemons.caught.push(action.payload);
     },
   },
 });
@@ -45,11 +67,14 @@ const {
   pokemonsRequested,
   pokemonsRequestFailed,
   pokemonCaught,
+  caughtPokemonsRequested,
+  caughtPokemonsRecieved,
+  caughtPokemonsRequestFailed,
 } = slice.actions;
 export default slice.reducer;
 
 const url = '/api/pokemons';
-const imageUrl = '/images';
+const caughtPokemonsUrl = 'api/caughtPokemons';
 
 export const loadPokemons = () => (dispatch, getState) => {
   const { lastFetch } = getState().entities.pokemons;
@@ -67,12 +92,45 @@ export const loadPokemons = () => (dispatch, getState) => {
   );
 };
 
-export const catchPokemon = id => (dispatch, getState) => {
+export const loadCaughtPokemons = () => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
-      url: url + '/' + id,
+      url: caughtPokemonsUrl,
+      onStart: caughtPokemonsRequested.type,
+      onSuccess: caughtPokemonsRecieved.type,
+      onError: caughtPokemonsRequestFailed.type,
+    })
+  );
+};
+
+export const catchPokemon = pokemon => (dispatch, getState) => {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+
+  dispatch(
+    apiCallBegan({
+      url: url + '/' + pokemon.id,
       method: 'patch',
+      data: {
+        isCaught: true,
+        catchTime: new Date(Date.now()).toLocaleString('en-US', options),
+      },
       onSuccess: pokemonCaught.type,
+    })
+  );
+};
+
+export const handleCaughtPokemon = pokemon => dispatch => {
+  dispatch(
+    apiCallBegan({
+      url: caughtPokemonsUrl,
+      method: 'post',
+      data: pokemon,
     })
   );
 };
