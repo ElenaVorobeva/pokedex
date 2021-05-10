@@ -1,4 +1,6 @@
+@import '../../../section/mixins';
+
 .pokemon__btn_hover:hover {
-  background-color: #434a54 !important;
-  border-color: #434a54 !important;
+  background-color: map-get($colors, 'black') !important;
+  border-color: map-get($colors, 'black') !important;
 }

@@ -1,8 +1,24 @@
+@import '../../section/mixins';
+
 .about__title {
   font-family: 'pokemon';
-  color: #ffcb05;
-  -webkit-text-stroke: 5px #3466af;
+  color: map-get($colors, 'yellow');
+  -webkit-text-stroke: 5px map-get($colors, dark-blue);
   letter-spacing: 7px;
   font-size: 60px;
   line-height: 75px;
+}
+
+@media screen and (max-width: 476px) {
+  .about__title {
+    font-size: 45px;
+    line-height: 50px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .about__title {
+    font-size: 35px;
+    line-height: 40px;
+  }
 }

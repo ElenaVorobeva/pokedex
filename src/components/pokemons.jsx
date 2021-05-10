@@ -30,31 +30,35 @@ class Pokemons extends React.Component {
 }
 
   handlePokemonImage = id => {
-    return `http://localhost:9002/images/${id}.png`;
+    return `http://192.168.0.105:9002/images/${id}.png`;
+  }
+
+  handlePokemonImageError = (e) => {
+    e.target.src = "https://i.ytimg.com/vi/GPa_53O-vXE/maxresdefault.jpg";
   }
 
   render() {
 
     if (this.props.loading) return <p>Loading...</p>
+    if (this.props.pokemons.length === 0) return <p>No pokemons in the database.</p>
 
     const storedPokemons = this.props.pokemons;
 
     const { pageSize, currentPage } = this.state;
     const pokemons = paginate(storedPokemons, currentPage, pageSize);
 
-    const pokeball = 'http://localhost:9002/images/pokeball.svg'
-    const aboutPokemon = (id) => `http://localhost:3000/pokemons/${id}`
+    const aboutPokemon = (id) => `http://192.168.0.105:3000/pokemons/${id}`
 
     return (
       <React.Fragment>
-        <section className='pokemon'>
-        <h1 className="m-3">Pokemons</h1>
+        <section className='pokemon mt-3'>
+        <h1>Pokemons</h1>
           <div className="pokemon__cards mb-5">
             {pokemons.map((pokemon, index) => (
               <div key={index} className="pokemon__card">
                 <div className={pokemon.isCaught ? 'pokemon__inner pokemon__rotate' : 'pokemon__inner'}>
                   <div className="pokemon__front">
-                    <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+                    <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon" onError={this.handlePokemonImageError}/>
                     <div className="pokemon__top">
                       <p className="pokemon__name">{pokemon.name}</p>
                       <button className='btn btn-danger pokemon__btn pokemon__btn_hover' onClick={() => this.handleCatchButton(pokemon)}>Catch</button>
@@ -63,7 +67,7 @@ class Pokemons extends React.Component {
                 </div>
 
                   <div className="pokemon__back">
-                    <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+                    <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon" onError={this.handlePokemonImageError}/>
                     <div className="pokemon__top">
                       <p className="pokemon__name">{pokemon.name}</p>
                       <button className='btn btn-danger pokemon__btn pokemon__btn_disabled' disabled>Caught</button>
@@ -83,8 +87,8 @@ class Pokemons extends React.Component {
         pageCount={Math.ceil(this.props.pokemons.length / this.state.pageSize)}
         pageRangeDisplayed={5}
         marginPagesDisplayed={2}
-        previousLabel={'Prev'}
-        nextLabel={'Next'}
+        previousLabel={'<'}
+        nextLabel={'>'}
         onPageChange={this.handlePageChange}
 
         breakClassName='page-item'

@@ -26,15 +26,13 @@ class CaughtPokemons extends React.Component {
   }
 
   handlePokemonImage = id => {
-    return `http://localhost:9002/images/${id}.png`;
+    return `http://192.168.0.105:9002/images/${id}.png`;
   }
 
-  aboutPokemon = id => `http://localhost:3000/pokemons/${id}`;
+  aboutPokemon = id => `http://192.168.0.105:3000/pokemons/${id}`;
 
 
   render() {
-    console.log(this.props.caught)
-
     const { pageSize, currentPage } = this.state;
     const caughtPokemons = this.props.caught;
 
@@ -50,7 +48,7 @@ class CaughtPokemons extends React.Component {
       <React.Fragment>
       <section className="pokemon mt-3">
       <h1>Caught Pokemons</h1>
-      <div className="pokemon__cards m-4">
+      <div className="pokemon__cards mb-4">
         {pokemons.map((pokemon, index) => (
         <div key={index} className="pokemon__card">
           <div className='pokemon__front'>
@@ -70,8 +68,8 @@ class CaughtPokemons extends React.Component {
         pageCount={pagesCount}
         pageRangeDisplayed={5}
         marginPagesDisplayed={2}
-        previousLabel={'Prev'}
-        nextLabel={'Next'}
+        previousLabel={'<'}
+        nextLabel={'>'}
         onPageChange={this.handlePageChange}
 
         breakClassName='page-item'

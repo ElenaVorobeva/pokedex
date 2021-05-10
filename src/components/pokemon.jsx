@@ -14,11 +14,9 @@ const Pokemon = (props) => {
 
 
   const pokemons = props.pokemons;
-  console.log(pokemons); 
 
   let pokemon = pokemons.filter(item => item.id === id);
   pokemon = pokemon[0];
-  console.log(pokemon);
 
 
   const handleName = () => {
@@ -29,12 +27,12 @@ const Pokemon = (props) => {
   }
 
   const handlePokemonImage = () => {
-    return `http://localhost:9002/images/${id}.png`;
+    return `http://192.168.0.105:9002/images/${id}.png`;
 
   }
 
-  {if (props.loading || props.pokemons.length === 0) return <p>Loading...</p>}
-  {if (!props.pokemons.find(pokemon => pokemon.id === id)) return <p>No such pokemon in the database.</p>}
+  {if (props.loading === 0) return <p>Loading...</p>}
+  {if (!props.pokemons.find(pokemon => pokemon.id === id) || !props.pokemons.length) return <p>No such pokemon in the database.</p>}
 
   return (
     <React.Fragment>

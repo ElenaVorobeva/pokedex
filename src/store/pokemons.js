@@ -36,10 +36,6 @@ const slice = createSlice({
     },
 
     caughtPokemonsRecieved: (pokemons, action) => {
-      const index = pokemons.caught.findIndex(
-        pokemon => pokemon.id === action.payload.id
-      );
-
       pokemons.caught = action.payload;
       pokemons.loading = false;
     },

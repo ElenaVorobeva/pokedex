@@ -1,3 +1,15 @@
 .about__image {
   position: relative;
 }
+
+@media screen and (max-width: 821px) {
+  .about__image {
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 571px) {
+  .about__image {
+    align-self: flex-start;
+  }
+}

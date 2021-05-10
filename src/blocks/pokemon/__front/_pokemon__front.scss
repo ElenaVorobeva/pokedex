@@ -1,5 +1,4 @@
 @import '../../section/mixins';
-
 @import './_bg/pokemon__front_bg';
 
 .pokemon__front,
@@ -11,7 +10,7 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 
-  background: url('http://localhost:9002/images/pokeball1.svg');
+  background: url('http://192.168.0.105:9002/images/pokeball1.svg');
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: 50%;

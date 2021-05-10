@@ -7,13 +7,25 @@
   margin: 0 auto;
   padding: 15px 20px;
   width: 70%;
-  border: 10px #434a54 solid;
+  border: 10px map-get($colors, 'black') solid;
   border-radius: 20px;
-  background-color: #e6e9ed;
+  background-color: map-get($colors, 'grey');
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   position: relative;
+}
+
+@media screen and (max-width: 1201px) {
+  .about {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 821px) {
+  .about {
+    flex-direction: column;
+  }
 }

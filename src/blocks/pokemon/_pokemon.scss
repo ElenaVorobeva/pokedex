@@ -2,7 +2,6 @@
 @import './__card/pokemon__card.scss';
 @import './__image/pokemon__image';
 @import './__card-top/pokemon__card-top';
-@import './__pokeball/pokemon__pokeball';
 @import './__name/pokemon__name';
 @import './__btn/pokemon__btn';
 @import './__btn/_disabled/pokemon__btn_disabled';
@@ -12,11 +11,18 @@
 @import './__rotate/pokemon__rotate';
 @import './__link/pokemon__link';
 
-@import '../section/mixins';
-
 .pokemon {
   display: flex;
   flex-direction: column;
   width: 85%;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 601px) {
+  .pokemon {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: 0 auto;
+  }
 }

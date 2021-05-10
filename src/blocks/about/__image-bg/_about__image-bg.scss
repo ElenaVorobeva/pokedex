@@ -6,7 +6,22 @@
   bottom: 10px;
   left: 10px;
 
-  background-image: url('http://localhost:9002/images/pokeball.svg');
+  background-image: url('http://192.168.0.105:9002/images/pokeball.svg');
   background-repeat: no-repeat;
   z-index: 1;
+}
+
+@media screen and (max-width: 821px) {
+  .about__image-bg {
+    left: auto;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+@media screen and (max-width: 476px) {
+  .about__image-bg {
+    width: 40px;
+    height: 40px;
+  }
 }

@@ -1,10 +1,11 @@
 @import './_hover/pokemon__btn_hover';
+@import '../../section/mixins';
 
 .pokemon__btn {
-  color: #e6e9ed !important;
+  color: map-get($colors, 'grey') !important;
   padding: 4px 70px !important;
-  background-color: #ed5564 !important;
-  // position: relative;
+  background-color: map-get($colors, 'red') !important;
+  border-color: map-get($colors, 'red') !important;
   z-index: 2;
   font-size: 15px !important;
 

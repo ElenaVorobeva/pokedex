@@ -1,0 +1,35 @@
+.pagination {
+  margin: 0 auto 15px;
+}
+
+.page-item.active .page-link {
+  background-color: map-get($colors, dark-blue) !important;
+  border-color: map-get($colors, dark-blue) !important;
+}
+
+@media screen and (max-width: 551px) {
+  .page-item,
+  .page-link {
+    font-size: 10px;
+    width: 30px;
+    padding: 6px 0 !important;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 446px) {
+  .page-item,
+  .page-link {
+    font-size: 9px;
+    padding: 6px 0 !important;
+    width: 27px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 374px) {
+  .page-item,
+  .page-link {
+    width: 23px;
+  }
+}

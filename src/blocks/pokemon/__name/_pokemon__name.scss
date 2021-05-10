@@ -1,5 +1,5 @@
 .pokemon__name {
-  -webkit-text-stroke: 2px #3466af;
+  -webkit-text-stroke: 2px map-get($colors, 'dark-blue');
   margin: 0 5px 40px;
   text-align: center;
   font-size: 19px;
