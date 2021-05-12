@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { loadCaughtPokemons } from '../store/pokemons';
 import { paginate } from '../utils/paginate';
 import ReactPaginate from 'react-paginate';
+import Loading from './common/Loading';
 
 
 
@@ -29,6 +30,10 @@ class CaughtPokemons extends React.Component {
     return `http://192.168.0.105:9002/images/${id}.png`;
   }
 
+  handlePokemonImageError = (e) => {
+    e.target.src = "http://192.168.0.105:9002/images/QM.svg";
+  }
+
   aboutPokemon = id => `http://192.168.0.105:3000/pokemons/${id}`;
 
 
@@ -38,6 +43,7 @@ class CaughtPokemons extends React.Component {
 
     const pokemons = paginate(caughtPokemons, currentPage, pageSize);
 
+    if (this.props.loading) return <Loading />
     if (caughtPokemons.length === 0) return <p>You have no caught pokemons.</p>
 
     const pagesCount = Math.ceil(caughtPokemons.length / this.state.pageSize);
@@ -52,7 +58,7 @@ class CaughtPokemons extends React.Component {
         {pokemons.map((pokemon, index) => (
         <div key={index} className="pokemon__card">
           <div className='pokemon__front'>
-            <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon"/>
+            <img className="pokemon__image" src={this.handlePokemonImage(pokemon.id)} alt="Pokemon" onError={this.handlePokemonImageError}/>
               <div className="pokemon__top">
                 <p className="pokemon__name">{pokemon.name}</p>
                 <button className='btn btn-danger pokemon__btn pokemon__btn_disabled' disabled>Caught</button>
@@ -93,7 +99,8 @@ class CaughtPokemons extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    caught: state.entities.pokemons.caught
+    caught: state.entities.pokemons.caught,
+    loading: state.entities.pokemons.loading
   }
 }
  

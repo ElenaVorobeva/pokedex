@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from './components/Home';
 import CaughtPokemons from './components/CaughtPokemons';
-import NavBar from './components/navbar';
+import NavBar from './components/common/navbar';
 import Pokemon from './components/pokemon';
 
 function App() {

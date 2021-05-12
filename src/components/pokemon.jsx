@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { loadPokemons } from '../store/pokemons';
+import Loading from './common/Loading';
 
 
 const Pokemon = (props) => {
@@ -27,11 +28,18 @@ const Pokemon = (props) => {
   }
 
   const handlePokemonImage = () => {
-    return `http://192.168.0.105:9002/images/${id}.png`;
+    const xhr = new XMLHttpRequest();
+    xhr.open('HEAD', `http://192.168.0.105:9002/images/${id}.png`, false);
+    xhr.send();
 
+    if (xhr.status == "404") {
+        return `http://192.168.0.105:9002/images/QM.svg`;
+    } else {
+        return `http://192.168.0.105:9002/images/${id}.png`;
+    }
   }
 
-  {if (props.loading === 0) return <p>Loading...</p>}
+  {if (props.loading) return <Loading />}
   {if (!props.pokemons.find(pokemon => pokemon.id === id) || !props.pokemons.length) return <p>No such pokemon in the database.</p>}
 
   return (

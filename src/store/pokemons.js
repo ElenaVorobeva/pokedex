@@ -10,6 +10,8 @@ const slice = createSlice({
     caught: [],
     loading: false,
     lastFetch: null,
+    catchPokemonLoading: false,
+    handleCatchingPokemon: false,
   },
 
   reducers: {
@@ -44,7 +46,12 @@ const slice = createSlice({
       pokemons.loading = false;
     },
 
+    catchPokemonRequested: pokemons => {
+      pokemons.catchPokemonLoading = true;
+    },
+
     pokemonCaught: (pokemons, action) => {
+      pokemons.catchPokemonLoading = false;
       const index = pokemons.list.findIndex(
         pokemon => pokemon.id === action.payload.id
       );
@@ -52,8 +59,21 @@ const slice = createSlice({
       pokemons.list[index] = action.payload;
     },
 
-    caughtPokemonHandled: (pokemons, action) => {
+    catchPokemonFailed: pokemons => {
+      pokemons.catchPokemonLoading = false;
+    },
+
+    handleCaughtPokemonRequested: pokemons => {
+      pokemons.handleCatchingPokemon = true;
+    },
+
+    CaughtPokemonHandled: (pokemons, action) => {
+      pokemons.handleCatchingPokemon = false;
       pokemons.caught.push(action.payload);
+    },
+
+    handleCaughtPokemonFailed: pokemons => {
+      pokemons.catchPokemonLoading = false;
     },
   },
 });
@@ -62,10 +82,15 @@ const {
   pokemonsRecieved,
   pokemonsRequested,
   pokemonsRequestFailed,
-  pokemonCaught,
   caughtPokemonsRequested,
   caughtPokemonsRecieved,
   caughtPokemonsRequestFailed,
+  catchPokemonRequested,
+  pokemonCaught,
+  catchPokemonFailed,
+  handleCaughtPokemonRequested,
+  CaughtPokemonHandled,
+  handleCaughtPokemonFailed,
 } = slice.actions;
 export default slice.reducer;
 
@@ -99,6 +124,19 @@ export const loadCaughtPokemons = () => (dispatch, getState) => {
   );
 };
 
+export const handleCaughtPokemon = pokemon => dispatch => {
+  dispatch(
+    apiCallBegan({
+      url: caughtPokemonsUrl,
+      method: 'post',
+      data: pokemon,
+      onStart: handleCaughtPokemonRequested.type,
+      onSuccess: CaughtPokemonHandled.type,
+      onError: handleCaughtPokemonFailed.type,
+    })
+  );
+};
+
 export const catchPokemon = pokemon => (dispatch, getState) => {
   const options = {
     year: 'numeric',
@@ -116,17 +154,9 @@ export const catchPokemon = pokemon => (dispatch, getState) => {
         isCaught: true,
         catchTime: new Date(Date.now()).toLocaleString('en-US', options),
       },
+      onStart: catchPokemonRequested.type,
       onSuccess: pokemonCaught.type,
-    })
-  );
-};
-
-export const handleCaughtPokemon = pokemon => dispatch => {
-  dispatch(
-    apiCallBegan({
-      url: caughtPokemonsUrl,
-      method: 'post',
-      data: pokemon,
+      onError: catchPokemonFailed.type,
     })
   );
 };

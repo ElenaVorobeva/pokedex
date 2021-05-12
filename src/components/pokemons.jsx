@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { loadPokemons, catchPokemon, handleCaughtPokemon } from '../store/pokemons';
 import { paginate } from '../utils/paginate';
 import ReactPaginate from 'react-paginate';
+import Loading from './common/Loading';
 
 class Pokemons extends React.Component {
 
@@ -34,12 +35,12 @@ class Pokemons extends React.Component {
   }
 
   handlePokemonImageError = (e) => {
-    e.target.src = "https://i.ytimg.com/vi/GPa_53O-vXE/maxresdefault.jpg";
+    e.target.src = "http://192.168.0.105:9002/images/QM.svg";
   }
 
   render() {
 
-    if (this.props.loading) return <p>Loading...</p>
+    if (this.props.loading) return <Loading />
     if (this.props.pokemons.length === 0) return <p>No pokemons in the database.</p>
 
     const storedPokemons = this.props.pokemons;
